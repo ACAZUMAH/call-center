@@ -1,6 +1,7 @@
 export const routesEndPoints = {
     HOME: '/',
-    DASHBOARD: '/dashboard',
+    HISTORY: '/history',
     PRODUCTS: '/products',
-    SETTINGS: '/settings'
+    SETTINGS: '/settings',
+    LOGIN: '/login'
 }
