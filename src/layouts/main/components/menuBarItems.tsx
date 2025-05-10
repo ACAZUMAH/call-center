@@ -9,7 +9,11 @@ export const MenuBarItems: React.FC<SidebarItemsProps> = ({ label, Icon, route }
 
   return (
     <>
-      <Tabs.Tab value={route} leftSection={<Icon stroke={1.5} size={20} onClick={navigateToRoute}/>}>
+      <Tabs.Tab
+        value={route}
+        leftSection={<Icon stroke={1.5} size={20} />}
+        onClick={navigateToRoute}
+      >
         {label}
       </Tabs.Tab>
     </>

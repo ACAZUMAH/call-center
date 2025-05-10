@@ -7,3 +7,12 @@
 .tabsList {
     --tab-border-color: transparent;
 }
+
+.tabsList [data-active] {
+    color: #06449c !important;
+    font-weight: 600;
+}
+
+.tabsList [data-active] svg {
+    stroke: #06449c !important;
+}

@@ -6,7 +6,6 @@ import { Conditional } from "../components";
 
 export const RouteProtector: React.FC = () => {
   const { isLoggedIn } = useAppAuthentication();
-  console.log(isLoggedIn)
   return (
     <>
       <Conditional condition={isLoggedIn}>

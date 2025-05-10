@@ -1,4 +1,4 @@
-import { ActionIcon, Box, Container, Group, Title } from "@mantine/core";
+import { ActionIcon, Box, Container, Group, Image } from "@mantine/core";
 import { IconMoon, IconSunHigh } from "@tabler/icons-react";
 import React from "react";
 import { useAppSettings } from "../../../hooks/useAppSettings";
@@ -13,10 +13,14 @@ export const MainHeader: React.FC = () => {
     <>
       <Container fluid h={60}>
         <Group justify="space-between" h="100%">
-          <Group>
-            <Title ta="center" order={3} c="brand">
-              Call Center
-            </Title>
+          <Group align="center">
+            <Image
+              src={
+                "https://margaherita.fra1.cdn.digitaloceanspaces.com/chrisbsite/pizzamanchickenmanlogo.png"
+              }
+              h={40}
+              fit="contain"
+            />
           </Group>
           <Group align="center" justify="space-between">
             <Box mr="sm">

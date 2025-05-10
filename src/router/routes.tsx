@@ -1,10 +1,10 @@
 import { RouteObject } from "react-router-dom";
-import { Products } from "../products";
 import { MainLayout } from "../layouts/main";
 import { routesEndPoints } from "../constants";
-import { Settings } from "../settings";
 import { Login } from "../authentication/login";
 import { RouteProtector } from "./RouteProtector";
+import { History } from "../history";
+import { Home } from "../Home";
 
 export const routes: RouteObject[] = [
   {
@@ -16,11 +16,11 @@ export const routes: RouteObject[] = [
         children: [
           {
             index: true,
-            element: <Products />,
+            element: <Home />,
           },
           {
-            path: routesEndPoints.SETTINGS,
-            element: <Settings />,
+            path: routesEndPoints.HISTORY,
+            element: <History />,
           },
         ],
       },

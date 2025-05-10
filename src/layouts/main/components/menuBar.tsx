@@ -1,25 +1,22 @@
 import { Container, Paper, ScrollArea, Tabs } from "@mantine/core";
 import React, { useMemo } from "react";
-import { extractRoute, menuItems } from ".";
+import { menuItems } from ".";
 import classes from "../css/index.module.css";
 import { MenuBarItems } from "./menuBarItems";
 import { useLocation } from "react-router-dom";
 
 export const MenuBar: React.FC = () => {
+
   const location = useLocation();
+
   const active = useMemo(
-    () =>
-        location.pathname === "/"
-        ? "/products"
-        : extractRoute(location.pathname),
-    [location.pathname]
+    () => location.pathname, [location.pathname]
   );
-  console.log(active);
 
   return (
     <ScrollArea scrollbars="x" scrollbarSize={0}>
       <Paper pt={8} withBorder className={classes.paper}>
-        <Container size="xl">
+        <Container size="95%">
           <Tabs
             value={active}
             bd={0}

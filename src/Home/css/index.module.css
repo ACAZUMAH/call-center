@@ -1,0 +1,15 @@
+
+.floatLeft {
+    margin: 0;
+    padding: 0;
+    float: left;
+    width: 70%;
+    margin-top: 15px;
+}
+
+.floatRight {
+    margin: 0;
+    padding: 0;
+    float: right;
+    width: 29%;
+}
