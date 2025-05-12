@@ -14,11 +14,13 @@ export interface Authentication {
 
 export interface AuthenticationActions extends PayloadAction<Partial<Authentication>> {}
 
+export interface CartItem {
+    item: any,
+    quantity: number
+}
 export interface Cart {
     opened: boolean
-    cartItems: any[]
-    subTotal: number,
-    grandTotal: number
+    cartItems: CartItem[]
 }
 
 export interface CartActions extends PayloadAction<Partial<Cart>> {}

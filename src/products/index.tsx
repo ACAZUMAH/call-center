@@ -7,7 +7,7 @@ import { TablePagination } from "../components/pagination";
 export const Products: React.FC = () => {
   return (
     <>
-      <Paper w="100%" withBorder radius="lg" mb="sm">
+      <Paper w="100%" withBorder radius="lg">
         <ProductsHeader />
 
         <Divider />

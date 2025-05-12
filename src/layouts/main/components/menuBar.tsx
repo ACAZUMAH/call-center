@@ -16,7 +16,7 @@ export const MenuBar: React.FC = () => {
   return (
     <ScrollArea scrollbars="x" scrollbarSize={0}>
       <Paper pt={8} withBorder className={classes.paper}>
-        <Container size="95%">
+        <Container size="95%" fluid>
           <Tabs
             value={active}
             bd={0}

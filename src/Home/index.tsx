@@ -5,18 +5,18 @@ import { Cart } from "../cart";
 
 export const Home: React.FC = () => {
   return (
-    <Container size="95%" w="100%">
-      <Title order={2} mt="md" fw={500}>
+    <Container size="95%" fluid my="xl">
+      <Title order={2} fw={500}>
         Hello, Azumah
       </Title>
       <Text c="dimmed" size="lg">
-        Create a new sales
+        Create a new sale
       </Text>
       <div style={{ display: "flex", gap: "16px" }}>
-        <div style={{ flex: 2, marginTop: "15px" }}>
+        <div style={{ flex: 3, marginTop: "15px" }}>
           <Products />
         </div>
-        <div style={{ flex: 1}}>
+        <div style={{ flex: 2 }}>
           <Cart />
         </div>
       </div>

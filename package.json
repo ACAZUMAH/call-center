@@ -12,6 +12,7 @@
   "dependencies": {
     "@mantine/core": "^7.17.5",
     "@mantine/hooks": "^7.17.5",
+    "@mantine/notifications": "^8.0.0",
     "@reduxjs/toolkit": "^2.7.0",
     "@tabler/icons": "^3.31.0",
     "@tabler/icons-react": "^3.31.0",
