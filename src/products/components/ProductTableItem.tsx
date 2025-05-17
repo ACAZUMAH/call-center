@@ -3,6 +3,7 @@ import React from "react";
 import { ProductTableItemProps } from "../interfaces";
 import { IconPlus } from "@tabler/icons-react";
 import { useAddItemToCart } from "../../hooks/useAppCart";
+import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   id,
@@ -11,20 +12,22 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   category,
   price,
 }) => {
-  const addToCart = useAddItemToCart()
+  const addToCart = useAddItemToCart();
 
   return (
     <Table.Tr>
       <Table.Td ta="center">{index}</Table.Td>
       <Table.Td ta="center">{name}</Table.Td>
       <Table.Td ta="center">{category}</Table.Td>
-      <Table.Td ta="center">GH¢ {price}</Table.Td>
+      <Table.Td ta="center">
+        <CurrencyFormatter value={price} />
+      </Table.Td>
       <Table.Td ta="center">
         <ActionIcon
           variant="transparent"
           aria-label="add to cart icon"
           size="sm"
-          onClick={() => addToCart({ id, name, category, price})}
+          onClick={() => addToCart({ id, name, category, price })}
         >
           <IconPlus />
         </ActionIcon>

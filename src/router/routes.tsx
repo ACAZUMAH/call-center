@@ -5,6 +5,7 @@ import { Login } from "../authentication/login";
 import { RouteProtector } from "./RouteProtector";
 import { History } from "../history";
 import { Home } from "../Home";
+import { Checkout } from "../checkout";
 
 export const routes: RouteObject[] = [
   {
@@ -17,6 +18,9 @@ export const routes: RouteObject[] = [
           {
             index: true,
             element: <Home />,
+          },{
+            path: routesEndPoints.CHECKOUT,
+            element: <Checkout />
           },
           {
             path: routesEndPoints.HISTORY,

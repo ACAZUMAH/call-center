@@ -10,9 +10,16 @@ import {
   Title,
 } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
+import {
+  useDecreaseCartItemQuantity,
+  useIncreaseCartItemQuantity,
+} from "../../hooks/useAppCart";
+import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const CartItemList: React.FC<CartItem> = (cartItem) => {
   const { item, quantity } = cartItem;
+  const increaseQuantity = useIncreaseCartItemQuantity();
+  const decreaseQuantity = useDecreaseCartItemQuantity();
 
   return (
     <Paper withBorder radius="md" p="md" shadow="0">
@@ -22,15 +29,23 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
           <Group justify="space-between">
             <Group justify="baseLine">
               <Title order={3} c="brand">
-                GH¢ {item.price}
+               <CurrencyFormatter value={item.price} />
               </Title>
             </Group>
             <Group gap="sm">
-              <ActionIcon variant="default" radius="xl">
+              <ActionIcon
+                variant="default"
+                radius="xl"
+                onClick={() => decreaseQuantity(cartItem)}
+              >
                 <IconMinus stroke={1.5} size={12} />{" "}
               </ActionIcon>
               <Text>{quantity}</Text>
-              <ActionIcon variant="default" radius="xl">
+              <ActionIcon
+                variant="default"
+                radius="xl"
+                onClick={() => increaseQuantity(cartItem)}
+              >
                 <IconPlus stroke={1.5} size={12} />{" "}
               </ActionIcon>
             </Group>

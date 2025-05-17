@@ -43,14 +43,20 @@ export const useRemoveItemFromCart = () => {
     return (id: string) => dispatch(cartActions.removeItem(id))
 }
 
-export const useIncreaseItemQuantity = () => {
+export const useIncreaseCartItemQuantity = () => {
     const dispatch = useAppDispatch()
 
     return (cartItem: CartItem) => dispatch(cartActions.increaseQuentity(cartItem.item.id))
 }
 
-export const useDecreaseItemQuantity = () => {
+export const useDecreaseCartItemQuantity = () => {
     const dispatch = useAppDispatch()
 
     return (cartItem: CartItem) => dispatch(cartActions.decreseQuentity(cartItem.item.id))
+}
+
+export const useClearCart = () => {
+    const dispatch = useAppDispatch()
+
+    return () => dispatch(cartActions.clearCart())
 }

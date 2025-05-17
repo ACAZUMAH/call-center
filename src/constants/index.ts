@@ -1,7 +1,8 @@
 export const routesEndPoints = {
     HOME: '/',
+    CHECKOUT: '/checkout',
     HISTORY: '/history',
-    PRODUCTS: '/products',
-    SETTINGS: '/settings',
     LOGIN: '/login'
 }
+
+export const currencySymbol = { GHS: 'GH¢' }
