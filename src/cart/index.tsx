@@ -1,25 +1,32 @@
 import {
   Button,
   Container,
+  Fieldset,
   Group,
-  Paper,
   ScrollArea,
   Stack,
   Text,
   Title,
 } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { Conditional } from "../components";
 import { EmptyCart } from "./components/emptyCart";
-import { useCartItems, useCartItemsCount, useClearCart } from "../hooks/useAppCart";
+import {
+  useCartItems,
+  useCartItemsCount,
+  useClearCart,
+} from "../hooks/useAppCart";
 import { CartItemList } from "./components/cartItemList";
-import { CartTotals } from "../components/cartTotals/cartTotals";
+import { CartTotals } from "./components/cartTotals";
 import { ConfirmOrder } from "./components/confirmOrder";
+import { CustomerDetails } from "./components/customerDetails";
+import { MapModal } from "./components/MapModal";
 
 export const Cart: React.FC = () => {
+  const [showMap, setShowMap] = useState(false)
   const itemCount = useCartItemsCount();
   const cartItems = useCartItems();
-  const clearCart = useClearCart()
+  const clearCart = useClearCart();
 
   return (
     <>
@@ -30,15 +37,12 @@ export const Cart: React.FC = () => {
           offsetScrollbars
           scrollbarSize={5}
         >
-          <Title ta="center" order={2} fw={500}>
-            Cart
-          </Title>
-          <Conditional condition={cartItems.length >= 1}>
-            <Text size="lg" c="dimmed" my="md">
-              Review your shopping cart, and checkout your order
-            </Text>
-            <Paper withBorder py="sm" px="md" shadow="md">
-              <Stack gap="xl">
+          <Fieldset legend={<Title ta="center" order={2} fw={500}>Cart</Title>} radius="lg" p={10}>
+            <Conditional condition={cartItems.length >= 1}>
+              <Text size="lg" c="dimmed" my="md">
+                Review your shopping cart, and checkout your order
+              </Text>
+              <Stack gap="md">
                 <Group justify="space-between">
                   <Text size="lg">Cart Items: {itemCount}</Text>
                   <Button
@@ -57,15 +61,17 @@ export const Cart: React.FC = () => {
                   ))}
                 </Stack>
                 <CartTotals />
-                <ConfirmOrder />
+                <CustomerDetails />
+                <ConfirmOrder openMap={() => setShowMap(true)} />
               </Stack>
-            </Paper>
-          </Conditional>
-          <Conditional condition={cartItems.length === 0}>
-            <EmptyCart />
-          </Conditional>
+            </Conditional>
+            <Conditional condition={cartItems.length === 0}>
+              <EmptyCart />
+            </Conditional>
+          </Fieldset>
         </ScrollArea>
       </Container>
+      <MapModal opened={showMap} onClose={() => setShowMap(!showMap)}/>
     </>
   );
 };

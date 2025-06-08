@@ -60,3 +60,18 @@ export const useClearCart = () => {
 
     return () => dispatch(cartActions.clearCart())
 }
+
+export const useCartTotals = () => {
+    const cartItems = useCartItems()
+    const subTotal = cartItems.reduce((total, item) => total + (item.item.price * item.quantity), 0)
+
+    const delivery = 0 // TODO: get delivery cost from API
+
+    const total = subTotal + delivery
+
+    return {
+        total,
+        delivery,
+        subTotal
+    }
+}

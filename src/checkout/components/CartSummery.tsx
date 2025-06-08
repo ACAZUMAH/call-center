@@ -2,7 +2,7 @@ import { Box, Card, Flex, Paper, Text } from "@mantine/core";
 import React from "react";
 import { useCartItems } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
-import { CartTotals } from "../../components/cartTotals/cartTotals";
+import { CartTotals } from "../../cart/components/cartTotals";
 
 interface Props {
   item: any;
