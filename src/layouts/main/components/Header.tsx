@@ -1,4 +1,11 @@
-import { ActionIcon, Box, Container, Group, Image } from "@mantine/core";
+import {
+  ActionIcon,
+  Box,
+  Burger,
+  Container,
+  Group,
+  Image,
+} from "@mantine/core";
 import { IconMoon, IconSunHigh } from "@tabler/icons-react";
 import React from "react";
 import { useAppSettings } from "../../../hooks/useAppSettings";
@@ -40,7 +47,12 @@ export const MainHeader: React.FC = () => {
               <IconSunHigh stroke={0.5} />
             </Conditional>
           </ActionIcon>
-          <MainDropDown />
+          <Box visibleFrom="sm">
+            <MainDropDown />
+          </Box>
+          <Box hiddenFrom="sm">
+            <Burger />
+          </Box>
         </Group>
       </Group>
       <HeaderTabs />

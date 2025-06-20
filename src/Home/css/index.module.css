@@ -7,3 +7,22 @@
     flex: 3;
     margin-top: 16px;
 }
+
+.cart {
+    flex: 2
+}
+
+@media (max-width: 1024px) {
+    .main {
+        flex-direction: column;
+    }
+
+    .products {
+        flex: 1;
+    }
+
+    .cart {
+        flex: 1;
+        margin-top: 16px;
+    }
+}
