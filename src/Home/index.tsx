@@ -5,7 +5,7 @@ import { Cart } from "../cart";
 
 export const Home: React.FC = () => {
   return (
-    <Container size="95%" fluid my="xl">
+    <Container size="95%" fluid py="lg" mb="lg">
       <Title order={2} fw={500}>
         Hello, Azumah
       </Title>

@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const History: React.FC = () => {
+export const OrderManagement: React.FC = () => {
   return (
     <div>index</div>
   )

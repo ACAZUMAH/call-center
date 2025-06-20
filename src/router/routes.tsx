@@ -2,7 +2,7 @@ import { RouteObject } from "react-router-dom";
 import { MainLayout } from "../layouts/main";
 import { routesEndPoints } from "../constants";
 import { Login } from "../authentication/login";
-import { History } from "../history";
+import { OrderManagement } from "../orders";
 import { Home } from "../Home";
 import { Checkout } from "../checkout";
 import { routeProtector } from "./RouteProtector";
@@ -22,8 +22,8 @@ export const routes: RouteObject[] = [
         element: <Checkout />,
       },
       {
-        path: routesEndPoints.HISTORY,
-        element: <History />,
+        path: routesEndPoints.ORDERS,
+        element: <OrderManagement />,
       },
     ],
   },

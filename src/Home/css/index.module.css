@@ -1,15 +1,9 @@
-
-.floatLeft {
-    margin: 0;
-    padding: 0;
-    float: left;
-    width: 70%;
-    margin-top: 15px;
+.main {
+    display: flex;
+    gap: 16px;
 }
 
-.floatRight {
-    margin: 0;
-    padding: 0;
-    float: right;
-    width: 29%;
+.products {
+    flex: 3;
+    margin-top: 16px;
 }

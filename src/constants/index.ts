@@ -1,7 +1,7 @@
 export const routesEndPoints = {
     HOME: '/',
     CHECKOUT: '/checkout',
-    HISTORY: '/history',
+    ORDERS: '/orders',
     LOGIN: '/login'
 }
 
