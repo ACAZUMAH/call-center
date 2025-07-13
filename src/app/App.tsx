@@ -3,7 +3,7 @@ import { MantineThemeProvider } from "../providers";
 import { AppRouter } from "../router/router";
 import { persistor, store } from "../redux/store";
 import { PersistGate } from "redux-persist/integration/react";
-import { QueryProvider } from "../services/tansack-client";
+import { QueryProvider } from "../services/tanStack-client";
 import { StyledThemeProvider } from "../providers/StyledThemeProvider";
 
 function App() {

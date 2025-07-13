@@ -1,10 +1,15 @@
-import { Table } from "@mantine/core";
+import { Divider, Table } from "@mantine/core";
 import React from "react";
-import { testProducts } from ".";
 import { ProductTableItem, ProductTableItemLoader } from "./ProductTableItem";
 import { Conditional } from "../../components";
+import { ProductsTableProps } from "../interfaces";
+import { TablePagination } from "../../components/pagination";
 
-export const ProductsTable: React.FC = () => {
+export const ProductsTable: React.FC<ProductsTableProps> = ({
+  products,
+  loading,
+  showData,
+}) => {
   return (
     <>
       <Table
@@ -25,18 +30,22 @@ export const ProductsTable: React.FC = () => {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          <Conditional condition={true}>
-            {testProducts.map((item, index) => (
-              <ProductTableItem {...item} index={index} key={index} />
+          <Conditional condition={showData}>
+            {products?.map((product, index) => (
+              <ProductTableItem product={product} index={index} key={index} />
             ))}
           </Conditional>
-          <Conditional condition={false}>
+          <Conditional condition={loading}>
             {Array.from({ length: 10 }).map((_, index) => (
-              <ProductTableItemLoader key={index}/>
+              <ProductTableItemLoader key={index} />
             ))}
           </Conditional>
         </Table.Tbody>
       </Table>
+      <Divider />
+      <Conditional condition={showData}>
+        <TablePagination />
+      </Conditional>
     </>
   );
 };

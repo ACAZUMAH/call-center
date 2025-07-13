@@ -9,7 +9,7 @@ export const HeaderTabs: React.FC = () => {
     <ScrollArea scrollbars="x" scrollbarSize={0}>
       <Paper mt="3px" className={classes.paper}>
         <Group>
-          {headerTabs.map((item) => ( <HeaderTabItems {...item} />))}
+          {headerTabs.map((item, index) => ( <HeaderTabItems {...item} key={index}/>))}
         </Group>
       </Paper>
     </ScrollArea>

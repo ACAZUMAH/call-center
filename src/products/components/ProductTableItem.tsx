@@ -2,32 +2,29 @@ import { ActionIcon, Center, Skeleton, Table } from "@mantine/core";
 import React from "react";
 import { ProductTableItemProps } from "../interfaces";
 import { IconPlus } from "@tabler/icons-react";
-import { useAddItemToCart } from "../../hooks/useAppCart";
+// import { useAddItemToCart } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
-  id,
   index,
-  name,
-  category,
-  price,
+  product
 }) => {
-  const addToCart = useAddItemToCart();
+  // const addToCart = useAddItemToCart();
 
   return (
     <Table.Tr>
       <Table.Td ta="center">{index}</Table.Td>
-      <Table.Td ta="center">{name}</Table.Td>
-      <Table.Td ta="center">{category}</Table.Td>
+      <Table.Td ta="center">{product?.name}</Table.Td>
+      <Table.Td ta="center">{product?.productionCategory}</Table.Td>
       <Table.Td ta="center">
-        <CurrencyFormatter value={price} />
+        <CurrencyFormatter value={product?.unitPrice!} />
       </Table.Td>
       <Table.Td ta="center">
         <ActionIcon
           variant="transparent"
           aria-label="add to cart icon"
           size="sm"
-          onClick={() => addToCart({ id, name, category, price })}
+          onClick={() => {}}
         >
           <IconPlus />
         </ActionIcon>
