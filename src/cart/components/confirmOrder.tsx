@@ -1,9 +1,11 @@
 import { Box, Button, Group, Select } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 import React from "react";
-import { orderMethodsSelectData, paymentMethodsSelectData } from "../constants";
+import { orderMethodsSelectData } from "../constants";
 import { ComfirmOrderProps } from "../interface";
 import { useOderCheckoutForm } from "../hooks/useOrderCheckoutForm";
+import { createSelectData } from "../../helpers";
+import { PaymentOptionType } from "../../interfaces/graphql/graphql";
 
 export const ConfirmOrder: React.FC<ComfirmOrderProps> = ({ openMap }) => {
   const form = useOderCheckoutForm();
@@ -35,7 +37,7 @@ export const ConfirmOrder: React.FC<ComfirmOrderProps> = ({ openMap }) => {
           radius="md"
           c="dimmed"
           rightSection={<IconChevronDown stroke={1.5} />}
-          data={paymentMethodsSelectData}
+          data={createSelectData(PaymentOptionType)}
           value={form.values.paymentMethod}
           onChange={(value) => form.setFieldValue("paymentMethod", value)}
         />

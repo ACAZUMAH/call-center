@@ -1,13 +1,13 @@
-import { ActionIcon, Center, Skeleton, Table } from "@mantine/core";
+import { ActionIcon, Center, Group, Skeleton, Table } from "@mantine/core";
 import React from "react";
 import { ProductTableItemProps } from "../interfaces";
-import { IconPlus } from "@tabler/icons-react";
+import { IconEye, IconPlus } from "@tabler/icons-react";
 // import { useAddItemToCart } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   index,
-  product
+  product,
 }) => {
   // const addToCart = useAddItemToCart();
 
@@ -20,14 +20,25 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
         <CurrencyFormatter value={product?.unitPrice!} />
       </Table.Td>
       <Table.Td ta="center">
-        <ActionIcon
-          variant="transparent"
-          aria-label="add to cart icon"
-          size="sm"
-          onClick={() => {}}
-        >
-          <IconPlus />
-        </ActionIcon>
+        <Group justify="center" gap="sm">
+          <ActionIcon
+            variant="transparent"
+            aria-label="view product icon"
+            size="sm"
+            onClick={() => {}}
+            disabled
+          >
+            <IconEye />
+          </ActionIcon>
+          <ActionIcon
+            variant="transparent"
+            aria-label="add to cart icon"
+            size="sm"
+            onClick={() => {}}
+          >
+            <IconPlus />
+          </ActionIcon>
+        </Group>
       </Table.Td>
     </Table.Tr>
   );
@@ -41,17 +52,17 @@ export const ProductTableItemLoader = () => {
       </Table.Td>
       <Table.Td>
         <Center>
-          <Skeleton width={90} height={20} />
+          <Skeleton width={90} height={20} radius="xl" />
         </Center>
       </Table.Td>
       <Table.Td>
         <Center>
-          <Skeleton width={90} height={20} />
+          <Skeleton width={90} height={20} radius="xl" />
         </Center>
       </Table.Td>
       <Table.Td>
         <Center>
-          <Skeleton width={50} height={20} />
+          <Skeleton width={50} height={20} radius="xl" />
         </Center>
       </Table.Td>
       <Table.Td>

@@ -5,7 +5,7 @@ import { Cart } from "../cart";
 import classes from "./css/index.module.css";
 export const Home: React.FC = () => {
   return (
-    <Container size="95%" fluid py="lg" mb="lg">
+    <Container fluid py="lg" mb="lg">
       <Title order={2} fw={500}>
         Hello, Azumah
       </Title>

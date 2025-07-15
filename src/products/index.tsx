@@ -2,32 +2,36 @@ import { Alert, Divider, Paper } from "@mantine/core";
 import React from "react";
 import { ProductsHeader } from "./components/productsHeader";
 import { ProductsTable } from "./components/ProductsTable";
-import { useQuery } from "@tanstack/react-query";
-import { useProductsQueryOptions } from "./hooks/useGetProductsQuery";
 import { Conditional } from "../components";
+import { useProducts } from "./hooks/useProducts";
 
 export const Products: React.FC = () => {
-  const { data, isLoading, isError } = useQuery(
-    useProductsQueryOptions({ enabled: true })
-  );
-  const { productList } = data?.data || {};
-
-  const loading = isLoading || !productList;
-  const showData =
-    !isLoading && !isError && productList && productList.length > 0;
-  const showError = isError && !loading;
+  const products = useProducts();
+  const { data, isLoading, isError, actions, filters } = products;
+  const showData = !isLoading && data?.data?.productList?.length > 0;
+  const showError = isError && !isLoading;
 
   return (
     <>
       <Paper w="auto" withBorder radius="lg">
-        <ProductsHeader />
+        <ProductsHeader
+          refresh={actions.refetch}
+          setSearch={actions.handleSearchChange}
+          filters={filters}
+          setFilters={actions.handleFiltersChange}
+          dateRange={products.dateRange}
+          onDateChange={actions.handleDateChange}
+          setPrice={actions.handlePriceChange}
+        />
 
-        <Divider />
+        <Divider mt="xs" />
 
         <ProductsTable
-          products={productList}
-          loading={loading}
+          products={data?.data?.productList || []}
+          loading={isLoading}
           showData={showData}
+          limit={filters.limit!}
+          onLimitChange={actions.handleLimitChange}
         />
 
         <Conditional condition={showError}>

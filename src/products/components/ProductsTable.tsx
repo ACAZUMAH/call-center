@@ -9,6 +9,8 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   products,
   loading,
   showData,
+  limit,
+  onLimitChange
 }) => {
   return (
     <>
@@ -16,9 +18,9 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
         mt="xs"
         striped
         highlightOnHover
-        verticalSpacing="sm"
         stickyHeader
-        stickyHeaderOffset={60}
+        verticalSpacing="sm"
+        stickyHeaderOffset={102}
       >
         <Table.Thead>
           <Table.Tr>
@@ -36,7 +38,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
             ))}
           </Conditional>
           <Conditional condition={loading}>
-            {Array.from({ length: 10 }).map((_, index) => (
+            {Array.from({ length: 20 }).map((_, index) => (
               <ProductTableItemLoader key={index} />
             ))}
           </Conditional>
@@ -44,7 +46,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
       </Table>
       <Divider />
       <Conditional condition={showData}>
-        <TablePagination />
+        <TablePagination limit={limit} onLimitChange={onLimitChange}/>
       </Conditional>
     </>
   );

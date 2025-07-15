@@ -1,3 +1,5 @@
+import { createSelectData } from "../../helpers";
+
 const paymentMethods = {
   CREDIT_CARD: 'credit_card',
   CASH: 'cash',
@@ -8,21 +10,6 @@ const paymentMethods = {
 const orderMethods = {
     PICKUP: 'pickup',
     DELIVERY: 'delivery',
-}
-
-const convertToTitleCase = (str: string) => {
-  return `${str[0].toUpperCase()}${str
-    .slice(1)
-    .split("_")
-    .join(" ")
-    .toLowerCase()}`;
-}
-
-const createSelectData = (obj: Object) => {
-  return Object.values(obj).map((value) => ({
-    label: convertToTitleCase(value),
-    value,
-  }))
 }
 
 export const paymentMethodsSelectData = createSelectData(paymentMethods);

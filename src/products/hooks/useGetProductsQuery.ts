@@ -126,28 +126,30 @@ const getAllProductsQuery = `
   }
 `;
 
-
 export const useProductsQueryOptions = (getAllProductsInput: GetAllProductsInput) => {
-    return queryOptions({
-        queryKey: ["getAllProducts", getAllProductsInput],
-        queryFn: async () => {
-            try {   
-                const res = await fetch(`${import.meta.env.VITE_API_BASE_URL}/graphql`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        query: getAllProductsQuery,
-                        variables: { getAllProductsInput }
-                    })
-                })
-                const json = await res.json();
-                //console.log("GraphQL response:", json);
-                return json.data.getAllProducts;
-            } catch (error) {
-                console.error("Error fetching products:", error);
-            }
-        }
-    })
-}
+  return queryOptions({
+    queryKey: ["getAllProducts", getAllProductsInput],
+    queryFn: async () => {
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/graphql`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              query: getAllProductsQuery,
+              variables: { getAllProductsInput },
+            }),
+          }
+        );
+        const json = await res.json();
+        //console.log("GraphQL response:", json);
+        return json.data.getAllProducts;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    },
+  });
+};
