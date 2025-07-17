@@ -1,11 +1,4 @@
-import {
-  Button,
-  Group,
-  Paper,
-  Select,
-  TextInput,
-} from "@mantine/core";
-import { DatePickerInput } from "@mantine/dates";
+import { Button, Group, Paper, Select, TextInput } from "@mantine/core";
 import { IconRefresh, IconSearch } from "@tabler/icons-react";
 import React from "react";
 import { createSelectData } from "../../helpers";
@@ -16,51 +9,23 @@ export const ProductsHeader: React.FC<ProductsTableHeaderProps> = ({
   refresh,
   setSearch,
   filters,
-  setFilters,
-  dateRange,
-  onDateChange,
-  setPrice,
+  setFilters
 }) => {
   return (
     <>
-      <Paper top="0" mt="xs" px="xs" w="100%" pb="xs" pos="sticky">
-        <Group mb="sm">
+      <Paper top="0" mt="xs" px="xs" w="100%" pos="sticky">
+        <Group>
           <TextInput
             flex={1}
             radius="md"
             name="search"
             placeholder="Search products..."
-            value={filters?.name!}
+            value={filters?.megSearch || ""}
             rightSection={<IconSearch stroke={1.5} size={18} />}
             onChange={(e) => setSearch(e.target.value)}
           />
-          <Button
-            variant="default"
-            onClick={() => {
-              refresh();
-            }}
-          >
-            <IconRefresh />
-          </Button>
-        </Group>
-        <Group grow w="100%" gap="sm" pb="xs">
-          <DatePickerInput
-            w={300}
-            type="range"
-            valueFormat="DD/MM/YYYY"
-            placeholder="Pick a date range"
-            value={dateRange}
-            onChange={onDateChange}
-            clearable
-          />
-          <TextInput
-            name="Price"
-            w={200}
-            placeholder="Filter by price"
-            onChange={(e) => setPrice ? setPrice(Number(e.target.value)) : undefined}
-          />
           <Select
-            w={150}
+            w={200}
             radius="md"
             name="category"
             placeholder="Select category"
@@ -72,6 +37,12 @@ export const ProductsHeader: React.FC<ProductsTableHeaderProps> = ({
               });
             }}
           />
+          <Button
+            variant="default"
+            onClick={() => { refresh() }}
+          >
+            <IconRefresh />
+          </Button>
         </Group>
       </Paper>
     </>

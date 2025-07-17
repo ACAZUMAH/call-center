@@ -1,35 +1,8 @@
-import { queryOptions } from "@tanstack/react-query";
-import { GetAllProductsInput } from "../../interfaces/graphql/graphql";
-
-//   {
-//     "getAllProductsInput": {
-//       "upperDate": null,
-//       "unitPrice": null,
-//       "sortBy": null,
-//       "size": null,
-//       "sellingGroup": null,
-//       "productionCategory": null,
-//       "productCode": null,
-//       "orderOf": null,
-//       "name": null,
-//       "megSearch": null,
-//       "lowerDate": null,
-//       "limit": null,
-//       "branchIds": null,
-//       "branchIdsNotIn": null,
-//       "cursor": null,
-//       "cursorField": null,
-//       "cursorValue": null,
-//       "dateAgo": null,
-//       "description": null,
-//       "enabled": null,
-//       "exactFamily": null,
-//       "exactFamilyList": null,
-//       "exactSizes": null,
-//       "extraCursorValue": null,
-//       "family": null
-//     }
-//   }
+import { infiniteQueryOptions, queryOptions, UseQueryOptions } from "@tanstack/react-query";
+import {
+  GetAllProductsInput,
+  GetPaginatedProductsResponse,
+} from "../../interfaces/graphql/graphql";
 
 const getAllProductsQuery = `
   query GetAllProducts($getAllProductsInput: GetAllProductsInput) {
@@ -126,8 +99,15 @@ const getAllProductsQuery = `
   }
 `;
 
-export const useProductsQueryOptions = (getAllProductsInput: GetAllProductsInput) => {
+export const useProductsQueryOptions = <TData = GetPaginatedProductsResponse, TError = Error>(
+  getAllProductsInput?: GetAllProductsInput,
+  options?: Omit<
+    UseQueryOptions<GetPaginatedProductsResponse, TError, TData>,
+    "queryKey" | "queryFn"
+  >
+) => {
   return queryOptions({
+    ...options,
     queryKey: ["getAllProducts", getAllProductsInput],
     queryFn: async () => {
       try {
@@ -153,3 +133,42 @@ export const useProductsQueryOptions = (getAllProductsInput: GetAllProductsInput
     },
   });
 };
+
+
+export const useProductsInfiniteQueryOptions = (getAllProductsInput?: GetAllProductsInput) => {
+  return infiniteQueryOptions({
+    queryKey: ["getAllProducts", getAllProductsInput],
+    queryFn: async ({ pageParam }) => {
+      console.log("Fetching products with pageParam:", pageParam);
+      try {
+        const res = await fetch(
+          `${import.meta.env.VITE_API_BASE_URL}/graphql`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              query: getAllProductsQuery,
+              variables: { getAllProductsInput: { ...getAllProductsInput, cursor: pageParam } },
+            }),
+          }
+        );
+        const json = await res.json();
+        //console.log("GraphQL response:", json);
+        return json.data.getAllProducts;
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    },
+    initialPageParam: null,
+    getNextPageParam: (lastPage) => {
+      //console.log("Last page:", lastPage);
+      return lastPage?.hasNextPage ? lastPage.nextCursor : undefined;
+    },
+    getPreviousPageParam: (firstPage) => {
+      // console.log("First page:", firstPage);
+      return firstPage?.hasNextPage ? firstPage.nextCursor : undefined;
+    },
+  })
+}

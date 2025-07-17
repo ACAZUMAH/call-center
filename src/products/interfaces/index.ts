@@ -1,4 +1,3 @@
-import { DateValue } from "@mantine/dates"
 import { GetAllProductsInput, ProductType2 } from "../../interfaces/graphql/graphql"
 
 export interface ProductsTableHeaderProps {
@@ -6,9 +5,6 @@ export interface ProductsTableHeaderProps {
     setSearch: (value: string) => void
     filters: GetAllProductsInput
     setFilters: (filters: GetAllProductsInput) => void
-    dateRange: [DateValue, DateValue]
-    onDateChange: (value: [DateValue, DateValue]) => void
-    setPrice?: (price: number) => void 
 }
 
 export interface ProductTableItemProps {
@@ -17,9 +13,11 @@ export interface ProductTableItemProps {
 }
 
 export interface ProductsTableProps {
-    products?: ProductType2[]
+    products?: ProductType2[] 
     showData: boolean
     loading: boolean
     limit: number
+    loadingNext?: boolean
     onLimitChange: (limit: number) => void
+    onNextPage: () => void
 }

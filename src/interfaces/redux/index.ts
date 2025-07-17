@@ -1,4 +1,5 @@
 import { PayloadAction } from "@reduxjs/toolkit";
+import { ProductType2 } from "../graphql/graphql";
 
 export interface Settings {
     darkMode: boolean
@@ -15,7 +16,7 @@ export interface Authentication {
 export interface AuthenticationActions extends PayloadAction<Partial<Authentication>> {}
 
 export interface CartItem {
-    item: any,
+    item: ProductType2,
     quantity: number
 }
 export interface Cart {

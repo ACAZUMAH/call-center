@@ -8,9 +8,7 @@ export const useProductsFilters = () => {
   const [filters, setFilters] = useState<GetAllProductsInput>({
     enabled: true,
     limit: parseInt(pageSizes[1]),
-    name: "",
-    lowerDate: null,
-    upperDate: null,
+    megSearch: "",
   });
 
   const handleFiltersChange = (newFilters: GetAllProductsInput) => {
@@ -21,19 +19,8 @@ export const useProductsFilters = () => {
   };
 
   const handleSearchChange = useDebouncedCallback((search: string) => {
-    handleFiltersChange({ name: search });
+    handleFiltersChange({ megSearch: search });
   }, 200);
-
-  const handlePriceChange = (price: number) => {
-    handleFiltersChange({ unitPrice: price });
-  }
-
-  const handleDateChange = (value: [DateValue, DateValue]) => {
-    handleFiltersChange({
-      lowerDate: value[0] ? new Date(value[0]).toISOString() : null,
-      upperDate: value[1] ? new Date(value[1]).toISOString() : null,
-    });
-  };
 
   const handleLimitChange = (limit: number) => {
     handleFiltersChange({ limit });
@@ -45,9 +32,7 @@ export const useProductsFilters = () => {
     actions: {
         handleFiltersChange,
         handleSearchChange,
-        handleDateChange,
         handleLimitChange,
-        handlePriceChange,
     }
   }
 };

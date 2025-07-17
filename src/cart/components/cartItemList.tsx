@@ -29,7 +29,7 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
           <Group justify="space-between">
             <Group justify="baseLine">
               <Title order={3} c="brand">
-               <CurrencyFormatter value={item.price} />
+               <CurrencyFormatter value={item.unitPrice!} />
               </Title>
             </Group>
             <Group gap="sm">

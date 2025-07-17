@@ -1,5 +1,6 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
+import { EnumDeliveryType } from "../../interfaces/graphql/graphql";
 
 const validationSchema = yup.object().shape({
     customerName: yup.string().required("Customer name is required"),
@@ -15,8 +16,8 @@ export const useOderCheckoutForm = () => {
         initialValues: {
             customerName: "",
             customerPhone: "",
-            orderMethod: "pickup",
-            paymentMethod: "cash",
+            orderMethod: "" as EnumDeliveryType,
+            paymentMethod: "" as EnumDeliveryType,
             location: "",
             nearBranch: ""
         },

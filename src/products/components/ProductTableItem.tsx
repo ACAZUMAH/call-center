@@ -2,14 +2,14 @@ import { ActionIcon, Center, Group, Skeleton, Table } from "@mantine/core";
 import React from "react";
 import { ProductTableItemProps } from "../interfaces";
 import { IconEye, IconPlus } from "@tabler/icons-react";
-// import { useAddItemToCart } from "../../hooks/useAppCart";
+import { useAddItemToCart } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   index,
   product,
 }) => {
-  // const addToCart = useAddItemToCart();
+  const addToCart = useAddItemToCart();
 
   return (
     <Table.Tr>
@@ -34,7 +34,7 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
             variant="transparent"
             aria-label="add to cart icon"
             size="sm"
-            onClick={() => {}}
+            onClick={() => {addToCart(product)}}
           >
             <IconPlus />
           </ActionIcon>

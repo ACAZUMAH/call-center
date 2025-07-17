@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { Cart } from "../../interfaces/redux";
+import { ProductType2 } from "../../interfaces/graphql/graphql";
 
 const initialState: Cart = {
   cartItems: [],
@@ -22,10 +23,10 @@ const slice = createSlice({
       state.opened = !state.opened;
     },
 
-    addItem: (state: Cart, action: PayloadAction<any>) => {
+    addItem: (state: Cart, action: PayloadAction<ProductType2>) => {
       const item = action.payload;
       const existingItem = state.cartItems.find(
-        (cartItem) => cartItem.item.id === item.id
+        (cartItem) => cartItem.item._id === item._id
       );
       if (existingItem) {
         existingItem.quantity += 1;
@@ -37,14 +38,14 @@ const slice = createSlice({
     removeItem: (state: Cart, action: PayloadAction<string>) => {
       const id = action.payload;
       state.cartItems = state.cartItems.filter(
-        (cartItem) => cartItem.item.id !== id
+        (cartItem) => cartItem.item._id !== id
       );
     },
 
     increaseQuentity: (state: Cart, action: PayloadAction<string>) => {
       const id = action.payload;
       const existingItem = state.cartItems.find(
-        (cartItem) => cartItem.item.id === id
+        (cartItem) => cartItem.item._id === id
       );
       if (existingItem) {
         existingItem.quantity += 1;
@@ -54,12 +55,12 @@ const slice = createSlice({
     decreseQuentity: (state: Cart, action: PayloadAction<string>) => {
       const id = action.payload;
       const existingItem = state.cartItems.find(
-        (cartItem) => cartItem.item.id === id
+        (cartItem) => cartItem.item._id === id
       );
       if (existingItem) {
         if (existingItem.quantity === 1) {
           state.cartItems = state.cartItems.filter(
-            (cartItem) => cartItem.item.id !== id
+            (cartItem) => cartItem.item._id !== id
           );
         } else {
           existingItem.quantity -= 1;

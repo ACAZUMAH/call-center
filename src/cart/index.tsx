@@ -18,7 +18,6 @@ import {
 import { CartItemList } from "./components/cartItemList";
 import { CartTotals } from "./components/cartTotals";
 import { ConfirmOrder } from "./components/confirmOrder";
-import { CustomerDetails } from "./components/customerDetails";
 import { MapModal } from "./components/MapModal";
 
 export const Cart: React.FC = () => {
@@ -67,7 +66,6 @@ export const Cart: React.FC = () => {
                 ))}
               </Stack>
               <CartTotals />
-              <CustomerDetails />
               <ConfirmOrder openMap={() => setShowMap(true)} />
             </Stack>
           </Conditional>

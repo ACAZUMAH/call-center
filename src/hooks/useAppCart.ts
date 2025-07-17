@@ -3,7 +3,7 @@ import { cartActions } from "../redux/cart/slice";
 import { useAppSelector, useAppDispatch } from "./useAppReduxHooks";
 
 export const useCartOpened = () => {
-    const cartState = useAppSelector((state) => state.cart )
+    const cartState = useAppSelector((state) => state.cart)
     return cartState.opened
 }
 
@@ -46,13 +46,13 @@ export const useRemoveItemFromCart = () => {
 export const useIncreaseCartItemQuantity = () => {
     const dispatch = useAppDispatch()
 
-    return (cartItem: CartItem) => dispatch(cartActions.increaseQuentity(cartItem.item.id))
+    return (cartItem: CartItem) => dispatch(cartActions.increaseQuentity(cartItem.item?._id!))
 }
 
 export const useDecreaseCartItemQuantity = () => {
     const dispatch = useAppDispatch()
 
-    return (cartItem: CartItem) => dispatch(cartActions.decreseQuentity(cartItem.item.id))
+    return (cartItem: CartItem) => dispatch(cartActions.decreseQuentity(cartItem.item?._id!))
 }
 
 export const useClearCart = () => {
@@ -63,7 +63,7 @@ export const useClearCart = () => {
 
 export const useCartTotals = () => {
     const cartItems = useCartItems()
-    const subTotal = cartItems.reduce((total, item) => total + (item.item.price * item.quantity), 0)
+    const subTotal = cartItems.reduce((total, item) => total + (item.item.unitPrice! * item.quantity), 0)
 
     const delivery = 0 // TODO: get delivery cost from API
 

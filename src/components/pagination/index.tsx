@@ -1,16 +1,34 @@
-import { Group, Pagination, Paper, Select, Text } from "@mantine/core";
+import {
+  ActionIcon,
+  Group,
+  Paper,
+  Select,
+  Text,
+} from "@mantine/core";
 import React from "react";
 import { pageSizes } from "../../constants/tables";
+import { IconChevronLeft, IconChevronRight } from "@tabler/icons-react";
 
 interface TablePaginationProps {
   limit: number;
   onLimitChange: (limit: number) => void;
-  onPageChange?: (page: number) => void;
+  onNextPage: () => void;
+  onPreviousPage?: () => void;
+  disabledNext?: boolean;
+  disabledPrevious?: boolean;
+  loading?: boolean;
+  showNext?: boolean;
+  showPrevious?: boolean;
 }
 
 export const TablePagination: React.FC<TablePaginationProps> = ({
   limit,
   onLimitChange,
+  onNextPage,
+  onPreviousPage,
+  loading,
+  showNext,
+  showPrevious,
 }) => {
   return (
     <>
@@ -26,14 +44,14 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
               onChange={(value) => onLimitChange(parseInt(value!))}
             />
           </Group>
-          <Pagination.Root total={3}>
-            <Group gap={5}>
-              <Pagination.First />
-              <Pagination.Previous />
-              <Pagination.Items />
-              <Pagination.Next />
-            </Group>
-          </Pagination.Root>
+          <Group>
+            <ActionIcon onClick={onPreviousPage} disabled={showPrevious} loading={loading}>
+              <IconChevronLeft stroke={1.5} size={18} />
+            </ActionIcon>
+            <ActionIcon onClick={onNextPage} loading={loading} disabled={showNext}>
+              <IconChevronRight stroke={1.5} size={18} />
+            </ActionIcon>
+          </Group>
         </Group>
       </Paper>
     </>

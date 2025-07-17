@@ -7,9 +7,11 @@ import { useProducts } from "./hooks/useProducts";
 
 export const Products: React.FC = () => {
   const products = useProducts();
-  const { data, isLoading, isError, actions, filters } = products;
-  const showData = !isLoading && data?.data?.productList?.length > 0;
+  const { data, isLoading, isFetchingNextPage, isError, actions, filters } = products;
+
+  const showData = !isLoading && data?.length > 0;
   const showError = isError && !isLoading;
+  const showNoDatalert = !isLoading && !showData && !showError;
 
   return (
     <>
@@ -19,20 +21,30 @@ export const Products: React.FC = () => {
           setSearch={actions.handleSearchChange}
           filters={filters}
           setFilters={actions.handleFiltersChange}
-          dateRange={products.dateRange}
-          onDateChange={actions.handleDateChange}
-          setPrice={actions.handlePriceChange}
         />
 
         <Divider mt="xs" />
 
         <ProductsTable
-          products={data?.data?.productList || []}
-          loading={isLoading}
+          products={data || []}
+          loading={isLoading || isFetchingNextPage}
           showData={showData}
           limit={filters.limit!}
           onLimitChange={actions.handleLimitChange}
+          onNextPage={() => actions.fetchNextPage()}
+          loadingNext={isFetchingNextPage}
         />
+
+        <Conditional condition={showNoDatalert}>
+          <Alert color="yellow">
+            <Conditional condition={Boolean(filters?.megSearch!)}>
+              No products match your search criteria: "{filters.megSearch}".
+            </Conditional>
+            <Conditional condition={!filters.megSearch}>
+              No products are currently available.
+            </Conditional>
+          </Alert>
+        </Conditional>
 
         <Conditional condition={showError}>
           <Alert>Error loading products. Please try again later.</Alert>

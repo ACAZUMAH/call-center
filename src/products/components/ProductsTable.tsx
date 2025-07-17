@@ -10,7 +10,9 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   loading,
   showData,
   limit,
-  onLimitChange
+  onLimitChange,
+  onNextPage,
+  loadingNext,
 }) => {
   return (
     <>
@@ -46,7 +48,12 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
       </Table>
       <Divider />
       <Conditional condition={showData}>
-        <TablePagination limit={limit} onLimitChange={onLimitChange}/>
+        <TablePagination
+          limit={limit}
+          onLimitChange={onLimitChange}
+          onNextPage={onNextPage}
+          loading={loadingNext}
+        />
       </Conditional>
     </>
   );
