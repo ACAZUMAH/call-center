@@ -139,7 +139,6 @@ export const useProductsInfiniteQueryOptions = (getAllProductsInput?: GetAllProd
   return infiniteQueryOptions({
     queryKey: ["getAllProducts", getAllProductsInput],
     queryFn: async ({ pageParam }) => {
-      console.log("Fetching products with pageParam:", pageParam);
       try {
         const res = await fetch(
           `${import.meta.env.VITE_API_BASE_URL}/graphql`,
@@ -155,7 +154,6 @@ export const useProductsInfiniteQueryOptions = (getAllProductsInput?: GetAllProd
           }
         );
         const json = await res.json();
-        //console.log("GraphQL response:", json);
         return json.data.getAllProducts;
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -163,12 +161,12 @@ export const useProductsInfiniteQueryOptions = (getAllProductsInput?: GetAllProd
     },
     initialPageParam: null,
     getNextPageParam: (lastPage) => {
-      //console.log("Last page:", lastPage);
-      return lastPage?.hasNextPage ? lastPage.nextCursor : undefined;
+      //console.log("has next page:", lastPage?.data?.hasNextPage);
+      return lastPage?.data?.hasNextPage ? lastPage?.data?.nextCursor._id : undefined;
     },
-    getPreviousPageParam: (firstPage) => {
-      // console.log("First page:", firstPage);
-      return firstPage?.hasNextPage ? firstPage.nextCursor : undefined;
-    },
+    // getPreviousPageParam: (firstPage) => {
+    //   console.log("has previous page:", firstPage?.data?.hasNextPage);
+    //   return firstPage?.data?.hasNextPage ? firstPage?.data?.nextCursor : undefined;
+    // },
   })
 }

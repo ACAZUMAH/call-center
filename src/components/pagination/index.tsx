@@ -45,10 +45,10 @@ export const TablePagination: React.FC<TablePaginationProps> = ({
             />
           </Group>
           <Group>
-            <ActionIcon onClick={onPreviousPage} disabled={showPrevious} loading={loading}>
+            <ActionIcon onClick={onPreviousPage} disabled={!showPrevious} loading={loading}>
               <IconChevronLeft stroke={1.5} size={18} />
             </ActionIcon>
-            <ActionIcon onClick={onNextPage} loading={loading} disabled={showNext}>
+            <ActionIcon onClick={onNextPage} loading={loading} disabled={!showNext}>
               <IconChevronRight stroke={1.5} size={18} />
             </ActionIcon>
           </Group>

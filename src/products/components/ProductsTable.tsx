@@ -12,7 +12,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   limit,
   onLimitChange,
   onNextPage,
-  loadingNext,
+  hasNextPage,
 }) => {
   return (
     <>
@@ -36,7 +36,11 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
         <Table.Tbody>
           <Conditional condition={showData}>
             {products?.map((product, index) => (
-              <ProductTableItem product={product} index={index} key={index} />
+              <ProductTableItem
+                product={product}
+                index={index}
+                key={index}
+              />
             ))}
           </Conditional>
           <Conditional condition={loading}>
@@ -52,7 +56,8 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
           limit={limit}
           onLimitChange={onLimitChange}
           onNextPage={onNextPage}
-          loading={loadingNext}
+          showNext={hasNextPage}
+          showPrevious={false}
         />
       </Conditional>
     </>

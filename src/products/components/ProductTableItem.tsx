@@ -4,10 +4,11 @@ import { ProductTableItemProps } from "../interfaces";
 import { IconEye, IconPlus } from "@tabler/icons-react";
 import { useAddItemToCart } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
+//import { calculateItemNumber } from "../../helpers";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   index,
-  product,
+  product
 }) => {
   const addToCart = useAddItemToCart();
 

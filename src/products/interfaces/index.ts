@@ -9,7 +9,9 @@ export interface ProductsTableHeaderProps {
 
 export interface ProductTableItemProps {
     product: ProductType2 // Define the type of product based on your data structure
-    index: number
+    index: number,
+    limit?: number,
+    length?: number
 }
 
 export interface ProductsTableProps {
@@ -17,7 +19,7 @@ export interface ProductsTableProps {
     showData: boolean
     loading: boolean
     limit: number
-    loadingNext?: boolean
+    hasNextPage: boolean
     onLimitChange: (limit: number) => void
     onNextPage: () => void
 }

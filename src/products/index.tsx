@@ -6,12 +6,21 @@ import { Conditional } from "../components";
 import { useProducts } from "./hooks/useProducts";
 
 export const Products: React.FC = () => {
-  const products = useProducts();
-  const { data, isLoading, isFetchingNextPage, isError, actions, filters } = products;
+  const {
+    data,
+    isLoading,
+    isFetchingNextPage,
+    hasNextPage,
+    isError,
+    actions,
+    filters,
+    isFetchNextPageError,
+  } = useProducts();
 
-  const showData = !isLoading && data?.length > 0;
-  const showError = isError && !isLoading;
-  const showNoDatalert = !isLoading && !showData && !showError;
+  const showLoading = isLoading || isFetchingNextPage;
+  const showData = !showLoading && data?.length > 0;
+  const showError = (isError || isFetchNextPageError) && !isLoading;
+  const showNoDatalert = !showLoading && !showData && !showError;
 
   return (
     <>
@@ -27,12 +36,12 @@ export const Products: React.FC = () => {
 
         <ProductsTable
           products={data || []}
-          loading={isLoading || isFetchingNextPage}
+          loading={showLoading}
           showData={showData}
           limit={filters.limit!}
           onLimitChange={actions.handleLimitChange}
           onNextPage={() => actions.fetchNextPage()}
-          loadingNext={isFetchingNextPage}
+          hasNextPage={hasNextPage}
         />
 
         <Conditional condition={showNoDatalert}>

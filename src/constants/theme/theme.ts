@@ -38,3 +38,6 @@ export const theme: Themes = {
     },
   },
 };
+
+// color: #ff2400;
+// color: #ff2c2c;
