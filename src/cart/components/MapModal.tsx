@@ -24,6 +24,10 @@ export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
         radius="xl"
         title="Select Location"
         px={0}
+        overlayProps={{
+          backgroundOpacity: 0.55,
+          blur: 3,
+        }}
       >
         <AspectRatio ratio={21 / 9} style={{ border: 0 }}>
           <Paper

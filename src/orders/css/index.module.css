@@ -1,0 +1,9 @@
+.navFirst {
+  border-top-left-radius: var(--mantine-radius-xl);
+  border-top-right-radius: var(--mantine-radius-xl);
+}
+
+.navLast {
+  border-bottom-left-radius: var(--mantine-radius-xl);
+  border-bottom-right-radius: var(--mantine-radius-xl);
+}

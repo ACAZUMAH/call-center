@@ -2,12 +2,12 @@ import React from "react";
 import { CartItem } from "../../interfaces/redux";
 import {
   ActionIcon,
+  Badge,
   Flex,
   Group,
   Paper,
   Stack,
   Text,
-  Title,
 } from "@mantine/core";
 import { IconMinus, IconPlus } from "@tabler/icons-react";
 import {
@@ -28,9 +28,9 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
           <Text size="lg">{item.name}</Text>
           <Group justify="space-between">
             <Group justify="baseLine">
-              <Title order={3} c="brand">
+              <Badge size="xl">
                <CurrencyFormatter value={item.unitPrice!} />
-              </Title>
+              </Badge>
             </Group>
             <Group gap="sm">
               <ActionIcon
@@ -38,7 +38,7 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
                 radius="xl"
                 onClick={() => decreaseQuantity(cartItem)}
               >
-                <IconMinus stroke={1.5} size={12} />{" "}
+                <IconMinus stroke={1.5} size={12} />
               </ActionIcon>
               <Text>{quantity}</Text>
               <ActionIcon
@@ -46,7 +46,7 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
                 radius="xl"
                 onClick={() => increaseQuantity(cartItem)}
               >
-                <IconPlus stroke={1.5} size={12} />{" "}
+                <IconPlus stroke={1.5} size={12} />
               </ActionIcon>
             </Group>
           </Group>

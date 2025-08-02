@@ -12,6 +12,7 @@ export interface ProductTableItemProps {
     index: number,
     limit?: number,
     length?: number
+    onEdit: (productId: string) => void
 }
 
 export interface ProductsTableProps {

@@ -159,6 +159,8 @@ export const useProductsInfiniteQueryOptions = (getAllProductsInput?: GetAllProd
         console.error("Error fetching products:", error);
       }
     },
+    staleTime: 1000 * 60 * 5, // 5 minutes
+    gcTime: 1000 * 60 * 10, // 10 minutes
     initialPageParam: null,
     getNextPageParam: (lastPage) => {
       //console.log("has next page:", lastPage?.data?.hasNextPage);

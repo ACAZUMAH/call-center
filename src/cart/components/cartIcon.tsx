@@ -10,7 +10,7 @@ export const CartIcon: React.FC = () => {
   return (
     <>
       <Box pos="relative">
-        <ActionIcon variant="transparent" size="lg" onClick={toggleCart}>
+        <ActionIcon variant="transparent" size="lg" onClick={toggleCart} c="brand">
           <IconShoppingCart stroke={1.5} />
         </ActionIcon>
         <Badge pos="absolute" right={0} top={0} circle size="sm">

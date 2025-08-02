@@ -9,7 +9,8 @@
 }
 
 .cart {
-    flex: 2
+    flex: 2;
+    /* color: #ee3636 */
 }
 
 @media (max-width: 1024px) {

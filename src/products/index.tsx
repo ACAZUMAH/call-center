@@ -17,6 +17,7 @@ export const Products: React.FC = () => {
     isFetchNextPageError,
   } = useProducts();
 
+  const products = data || [];
   const showLoading = isLoading || isFetchingNextPage;
   const showData = !showLoading && data?.length > 0;
   const showError = (isError || isFetchNextPageError) && !isLoading;
@@ -35,7 +36,7 @@ export const Products: React.FC = () => {
         <Divider mt="xs" />
 
         <ProductsTable
-          products={data || []}
+          products={products}
           loading={showLoading}
           showData={showData}
           limit={filters.limit!}
@@ -45,7 +46,7 @@ export const Products: React.FC = () => {
         />
 
         <Conditional condition={showNoDatalert}>
-          <Alert color="yellow">
+          <Alert color="yellow" my="sm" mx="1px">
             <Conditional condition={Boolean(filters?.megSearch!)}>
               No products match your search criteria: "{filters.megSearch}".
             </Conditional>
@@ -56,7 +57,7 @@ export const Products: React.FC = () => {
         </Conditional>
 
         <Conditional condition={showError}>
-          <Alert>Error loading products. Please try again later.</Alert>
+          <Alert my="sm" mx="1px">Error loading products. Please try again later.</Alert>
         </Conditional>
       </Paper>
     </>

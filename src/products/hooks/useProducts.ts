@@ -1,6 +1,7 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { useProductsFilters } from "./useProductsFilter";
 import { useProductsInfiniteQueryOptions } from "./useGetProductsQuery";
+import { useMemo } from "react";
 
 export const useProducts = () => {
   const filters = useProductsFilters();
@@ -15,19 +16,20 @@ export const useProducts = () => {
     isFetchNextPageError,
   } = useInfiniteQuery(useProductsInfiniteQueryOptions(filters.filters));
 
-  const products = data?.pages?.flatMap((page) => page.data?.productList) || [];
+  const products = useMemo(() => {
+    if(!data?.pages) return [];
 
-  //console.log("products length:", products.length);
+    return data.pages.reduce((acc, page) => {
+      if(page?.data?.productList && Array.isArray(page.data.productList)) {
+        return [...acc, ...page.data.productList];
+      }
+      return acc
+    }, []);
+  }, [data?.pages])
 
-  //console.log("data pages length:", data?.pages?.length);
+  const nextCursor = data?.pages?.[data.pages.length - 1]?.data?.nextCursor || {};
 
-  const nextCursor = data?.pages?.[data.pages.length - 1]?.data?.nextCursor;
-
-  //console.log("Products data:", products);
-  //console.log("nextCursor:", nextCursor);
-  //console.log("next page:", data?.pages?.[data.pages.length - 1]?.data?.hasNextPage);
-
-  return {
+  return {    
     data: products,
     isLoading,
     isError,

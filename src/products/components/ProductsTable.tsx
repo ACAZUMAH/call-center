@@ -1,9 +1,10 @@
 import { Divider, Table } from "@mantine/core";
-import React from "react";
+import React, { useState } from "react";
 import { ProductTableItem, ProductTableItemLoader } from "./ProductTableItem";
 import { Conditional } from "../../components";
 import { ProductsTableProps } from "../interfaces";
 import { TablePagination } from "../../components/pagination";
+import { Product } from "../../product";
 
 export const ProductsTable: React.FC<ProductsTableProps> = ({
   products,
@@ -14,6 +15,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
   onNextPage,
   hasNextPage,
 }) => {
+  const [viewProduct, setViewProduct] = useState<string>();
   return (
     <>
       <Table
@@ -36,11 +38,7 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
         <Table.Tbody>
           <Conditional condition={showData}>
             {products?.map((product, index) => (
-              <ProductTableItem
-                product={product}
-                index={index}
-                key={index}
-              />
+              <ProductTableItem product={product} index={index} key={index} onEdit={setViewProduct}/>
             ))}
           </Conditional>
           <Conditional condition={loading}>
@@ -60,6 +58,11 @@ export const ProductsTable: React.FC<ProductsTableProps> = ({
           showPrevious={false}
         />
       </Conditional>
+      <Product
+        opened={Boolean(viewProduct)}
+        productId={viewProduct}
+        onClose={() => setViewProduct(undefined)}
+      />
     </>
   );
 };

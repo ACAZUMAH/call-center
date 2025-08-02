@@ -8,7 +8,8 @@ import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   index,
-  product
+  product,
+  onEdit
 }) => {
   const addToCart = useAddItemToCart();
 
@@ -26,14 +27,15 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
             variant="transparent"
             aria-label="view product icon"
             size="sm"
-            onClick={() => {}}
-            disabled
+            c="brand"
+            onClick={() => {onEdit(product?._id!)}}
           >
             <IconEye />
           </ActionIcon>
           <ActionIcon
             variant="transparent"
             aria-label="add to cart icon"
+            c="brand"
             size="sm"
             onClick={() => {addToCart(product)}}
           >
