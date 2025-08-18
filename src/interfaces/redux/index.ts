@@ -11,6 +11,7 @@ export interface Authentication {
     isLoggedIn: boolean,
     user?: any ,
     token?: string 
+    phoneNumber?: string
 }
 
 export interface AuthenticationActions extends PayloadAction<Partial<Authentication>> {}

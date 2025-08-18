@@ -4,10 +4,19 @@ import { Conditional } from "../components";
 import { useAppSettings } from "../hooks/useAppSettings";
 import { IconMoon, IconSunHigh } from "@tabler/icons-react";
 import { useLoginForm } from "./hooks/useLoginForm";
+import { useLoginMutation } from "./hooks/useLoginMutation";
 
 export const Login: React.FC = () => {
   const appSettings = useAppSettings();
   const form = useLoginForm()
+  const { handleLogin, loading } = useLoginMutation();
+
+  const handleSubmit = async () => {
+    const res = await handleLogin(form.values.phoneNumber, form.values.password);
+    if (res) {
+      form.resetForm();
+    }
+  }
 
   return (
     <>
@@ -66,7 +75,7 @@ export const Login: React.FC = () => {
                   onBlur={form.handleBlur}
                   error={form.touched.password ? form.errors.password : ""}
                 />
-                <Button radius="xl" mt="sm" disabled={!form.isValid}>
+                <Button radius="xl" mt="sm" disabled={!form.isValid} loading={loading} onClick={handleSubmit}>
                   Sign in
                 </Button>
               </Stack>

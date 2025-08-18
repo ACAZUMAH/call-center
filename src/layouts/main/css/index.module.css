@@ -29,3 +29,14 @@
     border-bottom-color: #ee3636;
   }
 }
+
+
+.userButton {
+  padding: var(--mantine-spacing-sm);
+  color: var(--mantine-color-text);
+  border-radius: var(--mantine-radius-md);
+
+  &:hover {
+    background-color: light-dark(var(--mantine-color-gray-0), var(--mantine-color-dark-6));
+  }
+}

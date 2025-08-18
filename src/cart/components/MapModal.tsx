@@ -1,8 +1,10 @@
 import {
   AspectRatio,
   Button,
+  Center,
   Divider,
   Group,
+  Loader,
   Modal,
   Paper,
   ScrollArea,
@@ -13,8 +15,19 @@ import {
 import React from "react";
 import { MapModalProps } from "../interface";
 import { IconMapPin } from "@tabler/icons-react";
+import { APIProvider, Map } from "@vis.gl/react-google-maps";
+import { useFindLocationListQueryOptions } from "../hooks/useLocationListQuery";
+import { useDebouncedState } from "@mantine/hooks";
+import { Conditional } from "../../components";
+import { useQuery } from "@tanstack/react-query";
+import { LocationsTable } from "./LocationsTable";
 
 export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
+  const [address, setAddress] = useDebouncedState("", 200);
+  const { data, isLoading } = useQuery(
+    useFindLocationListQueryOptions(address)
+  );
+
   return (
     <>
       <Modal
@@ -31,7 +44,7 @@ export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
       >
         <AspectRatio ratio={21 / 9} style={{ border: 0 }}>
           <Paper
-            style={{ position: "absolute" }}
+            style={{ position: "absolute", zIndex: 1 }}
             w="27%"
             h="auto"
             radius="xl"
@@ -61,19 +74,42 @@ export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
               </Group>
             </Stack>
             <Divider mb="sm" />
-            <Stack>
-              <TextInput radius="xl" placeholder="Search location" />
+            <Stack gap="lg">
+              <Stack gap={3}>
+                <TextInput
+                  radius="xl"
+                  placeholder="Search location"
+                  onChange={(e) => setAddress(e.currentTarget.value)}
+                />
+                <Text size="xs" c="dimmed">
+                  Where would you like your order to be delivered to?
+                </Text>
+              </Stack>
               <ScrollArea>
+                <Conditional condition={isLoading}>
+                  <Center>
+                    <Loader size="xs" />
+                  </Center>
+                </Conditional>
                 {/* This is where you would map the list of locations available when the user search */}
+                <Conditional condition={!isLoading && data?.length}>
+                  {data?.map((loc: any) => (
+                    <LocationsTable name={loc.name} />
+                  ))}
+                </Conditional>
               </ScrollArea>
               <Button radius="xl">Confirm Location</Button>
             </Stack>
           </Paper>
-          <iframe
-            src="https://www.google.com/maps/embed"
-            title="Google map"
-            style={{ border: 0, borderRadius: "var(--mantine-radius-xl)" }}
-          />
+          <APIProvider apiKey={`${import.meta.env.VITE_GOOGLE_API_KEY}`}>
+            <Map
+              style={{ width: "88vw", height: "70vh" }}
+              defaultCenter={{ lat: 22.54992, lng: 0 }}
+              defaultZoom={3}
+              gestureHandling={"greedy"}
+              disableDefaultUI={true}
+            />
+          </APIProvider>
         </AspectRatio>
       </Modal>
     </>

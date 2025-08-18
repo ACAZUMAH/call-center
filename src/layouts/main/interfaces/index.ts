@@ -2,8 +2,8 @@ import React from "react";
 
 export interface UserButtonProps extends React.ComponentPropsWithoutRef<'button'>{
     image: string
-    name: string
-    email: string
+    name?: string
+    email?: string
     icon?: React.ReactNode
 }
 
