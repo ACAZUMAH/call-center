@@ -138,7 +138,6 @@ export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
       <Modal
         opened={opened}
         onClose={onClose}
-        //size="100%"
         fullScreen
         radius="xl"
         title="Select Location"
