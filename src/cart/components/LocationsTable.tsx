@@ -1,33 +1,34 @@
-import { Table, Text } from "@mantine/core";
-import { IconArrowUp, IconSearch } from "@tabler/icons-react";
+import { ScrollArea, Table } from "@mantine/core";
 import React from "react";
+import { LocationTableItem } from "./LocationTableItem";
 
 interface LocationTableProps {
-  name: string;
-  placeId?: string;
-  onSelect?: (placeId: string) => void;
+  locations: any[]; // TODO: Define a proper type for locations
+  onSelect: (location: any) => void;
 }
 
-export const LocationsTable: React.FC<LocationTableProps> = ({ name, placeId, onSelect }) => {
+export const LocationsTable: React.FC<LocationTableProps> = ({
+  locations,
+  onSelect,
+}) => {
   return (
-    <Table>
-      <Table.Tbody>
-        <Table.Tr>
-          <Table.Td>
-            <IconSearch size={20} />
-          </Table.Td>
-          <Table.Td>
-            <Text size="md" fw="bold">
-              {name}
-            </Text>
-          </Table.Td>
-          <Table.Td>
-            <IconArrowUp style={{
-                 rotate: "45deg",
-                 }} />
-          </Table.Td>
-        </Table.Tr>
-      </Table.Tbody>
-    </Table>
+    <ScrollArea h={200} scrollbarSize="xs">
+      <Table
+        highlightOnHover
+        stickyHeader
+        verticalSpacing="sm"
+        stickyHeaderOffset={102}
+      >
+        <Table.Tbody>
+          {locations.map((location, index) => (
+            <LocationTableItem
+              location={location}
+              key={index}
+              onSelect={onSelect}
+            />
+          ))}
+        </Table.Tbody>
+      </Table>
+    </ScrollArea>
   );
 };

@@ -5,6 +5,7 @@ import { ProductType2 } from "../../interfaces/graphql/graphql";
 const initialState: Cart = {
   cartItems: [],
   opened: false,
+  deliveryFee: 0,
 };
 
 const slice = createSlice({
@@ -21,6 +22,10 @@ const slice = createSlice({
 
     toggleCart: (state: Cart) => {
       state.opened = !state.opened;
+    },
+
+    addDeliveryFee: (state: Cart, action: PayloadAction<number>) => {
+      state.deliveryFee = action.payload
     },
 
     addItem: (state: Cart, action: PayloadAction<ProductType2>) => {
@@ -42,7 +47,7 @@ const slice = createSlice({
       );
     },
 
-    increaseQuentity: (state: Cart, action: PayloadAction<string>) => {
+    increaseQuantity: (state: Cart, action: PayloadAction<string>) => {
       const id = action.payload;
       const existingItem = state.cartItems.find(
         (cartItem) => cartItem.item._id === id
@@ -52,7 +57,7 @@ const slice = createSlice({
       }
     },
 
-    decreseQuentity: (state: Cart, action: PayloadAction<string>) => {
+    decreaseQuantity: (state: Cart, action: PayloadAction<string>) => {
       const id = action.payload;
       const existingItem = state.cartItems.find(
         (cartItem) => cartItem.item._id === id

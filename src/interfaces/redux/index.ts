@@ -23,6 +23,7 @@ export interface CartItem {
 export interface Cart {
     opened: boolean
     cartItems: CartItem[]
+    deliveryFee: number
 }
 
 export interface CartActions extends PayloadAction<Partial<Cart>> {}

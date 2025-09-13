@@ -1,5 +1,6 @@
 import { showNotification } from "@mantine/notifications";
 import { useMutation } from "@tanstack/react-query";
+import { useAppAuthentication } from "../../hooks/useAppAuthentication";
 
 const useFindLocationMutation = `
    mutation FindLocationAddress($latitude: Float, $longitude: Float) {
@@ -13,6 +14,7 @@ const useFindLocationMutation = `
 `;
 
 export const useFindLocationAddressMutation = () => {
+  const { token } = useAppAuthentication();
   const mutation = useMutation({
     mutationKey: ["findLocationAddress"],
     mutationFn: async (variables: { latitude: number; longitude: number }) => {
@@ -20,6 +22,7 @@ export const useFindLocationAddressMutation = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({ query: useFindLocationMutation, variables }),
       });

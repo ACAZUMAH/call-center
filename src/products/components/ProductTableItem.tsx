@@ -9,7 +9,7 @@ import { CurrencyFormatter } from "../../components/currency/currency";
 export const ProductTableItem: React.FC<ProductTableItemProps> = ({
   index,
   product,
-  onEdit
+  onEdit,
 }) => {
   const addToCart = useAddItemToCart();
 
@@ -28,7 +28,9 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
             aria-label="view product icon"
             size="sm"
             c="brand"
-            onClick={() => {onEdit(product?._id!)}}
+            onClick={() => {
+              onEdit(product?._id!);
+            }}
           >
             <IconEye />
           </ActionIcon>
@@ -37,7 +39,9 @@ export const ProductTableItem: React.FC<ProductTableItemProps> = ({
             aria-label="add to cart icon"
             c="brand"
             size="sm"
-            onClick={() => {addToCart(product)}}
+            onClick={() => {
+              addToCart(product);
+            }}
           >
             <IconPlus />
           </ActionIcon>
@@ -70,7 +74,11 @@ export const ProductTableItemLoader = () => {
       </Table.Td>
       <Table.Td>
         <Center>
-          <Skeleton width={15} height={20} />
+          <Group justify="center" gap="sm">
+            <Skeleton width={15} height={20} radius="xl" />
+
+            <Skeleton width={15} height={20} radius="xl" />
+          </Group>
         </Center>
       </Table.Td>
     </Table.Tr>
