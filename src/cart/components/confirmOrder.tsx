@@ -6,7 +6,7 @@ import { useOderCheckoutForm } from "../hooks/useOrderCheckoutForm";
 import { createSelectData } from "../../helpers";
 import { PaymentOptionType } from "../../interfaces/graphql/graphql";
 
-export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({}) => {
+export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({ branch }) => {
   const form = useOderCheckoutForm();
 
   const handleChangeOderMethod = (value: any) => {
@@ -24,7 +24,9 @@ export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({}) => {
           withAsterisk
           c="dimmed"
           value={form.values.customerName}
-          onChange={(event) => form.setFieldValue("customerName", event.currentTarget.value)}
+          onChange={(event) =>
+            form.setFieldValue("customerName", event.currentTarget.value)
+          }
         />
         <TextInput
           name="phoneNumber"
@@ -34,7 +36,33 @@ export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({}) => {
           withAsterisk
           c="dimmed"
           value={form.values.customerPhone}
-          onChange={(event) => form.setFieldValue("customerPhone", event.currentTarget.value)}
+          onChange={(event) =>
+            form.setFieldValue("customerPhone", event.currentTarget.value)
+          }
+        />
+      </Group>
+      <Group grow mb="sm">
+        <TextInput
+          name="branch"
+          label="Branch"
+          radius="md"
+          placeholder="Select branch"
+          withAsterisk
+          c="dimmed"
+          disabled
+          value={branch?.name || ""}
+        />
+        <TextInput
+          name="location"
+          label="Location"
+          radius="md"
+          placeholder="Select location"
+          withAsterisk
+          c="dimmed"
+          value={form.values.location}
+          onChange={(event) =>
+            form.setFieldValue("location", event.currentTarget.value)
+          }
         />
       </Group>
       <Group grow>
@@ -65,7 +93,13 @@ export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({}) => {
           onChange={(value) => form.setFieldValue("paymentMethod", value)}
         />
       </Group>
-      <Button color="brand" fullWidth my="sm" radius="xl">
+      <Button
+        color="brand"
+        fullWidth
+        my="sm"
+        radius="xl"
+        disabled={!form.isValid}
+      >
         Checkout
       </Button>
     </Box>

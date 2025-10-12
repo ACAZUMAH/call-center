@@ -22,6 +22,7 @@ export const useOderCheckoutForm = () => {
             nearBranch: ""
         },
         validationSchema,
+        validateOnMount: true,
         onSubmit: (values) => {
             console.log( values);
         }

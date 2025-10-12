@@ -21,12 +21,12 @@ import { ConfirmOrder } from "./components/confirmOrder";
 import { BranchesSearch } from "./components/BranchesSearch";
 import { BranchType } from "../interfaces/graphql/graphql";
 import { useCheckAvailabilityMutation } from "./hooks/useCheckAvailability";
-import { AvailabilityModal } from "./components/AvailabilityModal";
+import { showNotification } from "@mantine/notifications";
+//import { AvailabilityModal } from "./components/AvailabilityModal";
 
 export const Cart: React.FC = () => {
   const [branch, setBranch] = useState<BranchType>();
-  const [availability, setAvailability] = useState<any>();
-
+  // const [availability, setAvailability] = useState<any>();
   const itemCount = useCartItemsCount();
   const cartItems = useCartItems();
   const clearCart = useClearCart();
@@ -43,13 +43,25 @@ export const Cart: React.FC = () => {
         branchId: branch?._id!,
       });
 
-      setAvailability(response);
+      if (response.unAvailable.length > 0) {
+        const unavailableItems = cartItems
+          .filter((cartItem) =>
+            response.unAvailable.includes(cartItem.item._id)
+          )
+          .map((cartItem) => cartItem.item.name)
+          .join(", ");
+
+        showNotification({
+          title: "Unavailable Items",
+          message: `The following items are unavailable at the selected branch: ${unavailableItems}`,
+          color: "red",
+          autoClose: 8000,
+        });
+      }
     };
 
     fetchAvailability();
   }, [branch]);
-
-  console.log("checkAvailability", JSON.stringify(availability, null, 2));
 
   return (
     <>
@@ -72,6 +84,7 @@ export const Cart: React.FC = () => {
             <Text size="lg" c="dimmed" my="md">
               Review your shopping cart, and checkout your order
             </Text>
+
             <Stack gap="md">
               <Group justify="space-between">
                 <Text size="lg">Cart Items: {itemCount}</Text>
@@ -83,35 +96,39 @@ export const Cart: React.FC = () => {
                   onClick={() => {
                     clearCart();
                     setBranch(undefined);
-                    setAvailability(undefined);
                   }}
                 >
                   Clear all
                 </Button>
               </Group>
+
               <Stack>
                 {cartItems.map((cartItem, index) => (
                   <CartItemList {...cartItem} key={index} />
                 ))}
               </Stack>
+
               <CartTotals />
+
               <Conditional condition={!branch}>
                 <BranchesSearch setBranch={setBranch} />
               </Conditional>
-              <ConfirmOrder />
+
+              <ConfirmOrder branch={branch} />
             </Stack>
           </Conditional>
+
           <Conditional condition={cartItems.length === 0}>
             <EmptyCart />
           </Conditional>
         </Fieldset>
       </ScrollArea>
 
-      <AvailabilityModal
-        opened={Boolean(availability)}
+      {/* <AvailabilityModal
+        opened={Boolean(availability?.unAvailable.length)}
         onClose={() => setAvailability(undefined)}
         availability={availability}
-      />
+      /> */}
     </>
   );
 };
