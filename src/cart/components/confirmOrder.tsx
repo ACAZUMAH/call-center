@@ -1,19 +1,16 @@
 import { Box, Button, Group, Select, TextInput } from "@mantine/core";
 import { IconChevronDown } from "@tabler/icons-react";
 import React from "react";
-import { ComfirmOrderProps } from "../interface";
+import { ConfirmOrderProps } from "../interface";
 import { useOderCheckoutForm } from "../hooks/useOrderCheckoutForm";
 import { createSelectData } from "../../helpers";
-import { EnumDeliveryType, PaymentOptionType } from "../../interfaces/graphql/graphql";
+import { PaymentOptionType } from "../../interfaces/graphql/graphql";
 
-export const ConfirmOrder: React.FC<ComfirmOrderProps> = ({ openMap }) => {
+export const ConfirmOrder: React.FC<ConfirmOrderProps> = ({}) => {
   const form = useOderCheckoutForm();
 
   const handleChangeOderMethod = (value: any) => {
     form.setFieldValue("orderMethod", value);
-    if (value === EnumDeliveryType.Motor) {
-      openMap();
-    }
   };
 
   return (
@@ -50,7 +47,7 @@ export const ConfirmOrder: React.FC<ComfirmOrderProps> = ({ openMap }) => {
           c="dimmed"
           placeholder="Select order method"
           rightSection={<IconChevronDown stroke={1.5} />}
-          data={createSelectData(EnumDeliveryType)}
+          data={["Pickup", "Delivery"]}
           value={form.values.orderMethod}
           onChange={handleChangeOderMethod}
         />

@@ -21,7 +21,7 @@ import { Conditional } from "../../components";
 import { useQuery } from "@tanstack/react-query";
 import { LocationsTable } from "./LocationsTable";
 import { useFindLocationCoordinatesQueryOptions } from "../hooks/useFindLocationCoordinates";
-import { useGetClosestBranchQueryOptions } from "../hooks/useGetBranch";
+import { useGetBranchesQueryOptions } from "../hooks/useGetBranches";
 import { useCalculateDeliveryPriceQuery } from "../hooks/useCalculateDeliveryPrice";
 import { useSetDeliveryFee } from "../../hooks/useAppCart";
 import { showNotification } from "@mantine/notifications";
@@ -55,7 +55,7 @@ export const MapModal: React.FC<MapModalProps> = ({ opened, onClose }) => {
   }, [coordinates?.data?.lat!, coordinates?.data?.lng!]);
 
   const { data: closeBranch, isLoading: loadingBranch } = useQuery(
-    useGetClosestBranchQueryOptions(
+    useGetBranchesQueryOptions(
       {
         coordinates: searchCoords || [],
         sortBy: "distance",

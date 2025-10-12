@@ -8,23 +8,47 @@ query GetAllBranches($getAllBranchesInput: GetAllBranchesInput) {
     data {
       branchList {
         _id
-        branchCode
-        branchContact
+        name
         branchLocation
         coordinates {
           latitude
           longitude
         }
-        courierType
-        name
+        branchContact
+        branchCode
+        enabled
+        distance
         region
+        pickupOnly
+        deliveryOnly
+        branchHasPinkBerry
+        branchImage
+        width
+        height
+        imagePublicId
+        createdAt
+        updatedAt
+        secondCourierEnabled
+        courierType
+        distance
+        deliveryType
+        cardPaymentPOSKeys {
+          provider
+          value
+        }
       }
     }
+    message
+    success
+    statusCode
   }
 }
 `;
 
-export const useGetClosestBranchQueryOptions = (data: GetAllBranchesInput, enabled: boolean) => {
+export const useGetBranchesQueryOptions = (
+  data: GetAllBranchesInput,
+  enabled: boolean
+) => {
   const { token } = useAppAuthentication();
   return queryOptions({
     enabled: enabled,
@@ -47,7 +71,8 @@ export const useGetClosestBranchQueryOptions = (data: GetAllBranchesInput, enabl
         );
 
         const result = await response.json();
-        return result.data.getAllBranches;
+
+        return result.data.getAllBranches.data.branchList;
       } catch (error) {
         console.error("Error fetching branches:", error);
         return null;

@@ -6,6 +6,7 @@ import { OrderManagement } from "../orders";
 import { Home } from "../Home";
 import { Checkout } from "../checkout";
 import { routeProtector } from "./RouteProtector";
+import { AuthLayout } from "../layouts/auth/AuthLayout";
 
 export const routes: RouteObject[] = [
   {
@@ -29,7 +30,13 @@ export const routes: RouteObject[] = [
   },
   {
     path: routesEndPoints.LOGIN,
+    element: <AuthLayout />,
     loader: routeProtector().requireNotLoggedIn(),
-    element: <Login />,
+    children: [
+      {
+        index: true,
+        element: <Login />,
+      }
+    ]
   },
 ];

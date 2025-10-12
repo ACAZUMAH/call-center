@@ -4,10 +4,10 @@ import { useCartTotals } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
 
 export const CartTotals: React.FC = () => {
-  const { delivery, total, subTotal } = useCartTotals();
+  const { total } = useCartTotals();
   return (
     <Box>
-      <Group justify="space-between" mb="sm">
+      {/* <Group justify="space-between" mb="sm">
         <Text>Subtotal</Text>
         <Text>
           <CurrencyFormatter value={subTotal} />
@@ -18,8 +18,7 @@ export const CartTotals: React.FC = () => {
         <Text>
           <CurrencyFormatter value={delivery} />
         </Text>
-      </Group>
-      <Divider />
+      </Group> */}
       <Group justify="space-between" mt="sm">
         <Text c="brand" size="lg" fw="bold">
           Total
@@ -28,6 +27,7 @@ export const CartTotals: React.FC = () => {
           <CurrencyFormatter value={total} />
         </Text>
       </Group>
+      <Divider mt="sm"/>
     </Box>
   );
 };

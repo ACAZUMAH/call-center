@@ -1,5 +1,5 @@
-export interface ComfirmOrderProps {
-    openMap: () => void,
+export interface ConfirmOrderProps {
+    openMap?: () => void,
 }
 
 export interface MapModalProps {

@@ -7,7 +7,7 @@ import {
   Text,
   Title,
 } from "@mantine/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Conditional } from "../components";
 import { EmptyCart } from "./components/emptyCart";
 import {
@@ -18,13 +18,38 @@ import {
 import { CartItemList } from "./components/cartItemList";
 import { CartTotals } from "./components/cartTotals";
 import { ConfirmOrder } from "./components/confirmOrder";
-import { MapModal } from "./components/MapModal";
+import { BranchesSearch } from "./components/BranchesSearch";
+import { BranchType } from "../interfaces/graphql/graphql";
+import { useCheckAvailabilityMutation } from "./hooks/useCheckAvailability";
+import { AvailabilityModal } from "./components/AvailabilityModal";
 
 export const Cart: React.FC = () => {
-  const [showMap, setShowMap] = useState(false);
+  const [branch, setBranch] = useState<BranchType>();
+  const [availability, setAvailability] = useState<any>();
+
   const itemCount = useCartItemsCount();
   const cartItems = useCartItems();
   const clearCart = useClearCart();
+
+  const { handleCheckAvailability } = useCheckAvailabilityMutation();
+
+  useEffect(() => {
+    const productIds = cartItems.map((item) => item.item._id!);
+    if (productIds.length < 1 || !branch) return;
+
+    const fetchAvailability = async () => {
+      const response = await handleCheckAvailability({
+        productIds,
+        branchId: branch?._id!,
+      });
+
+      setAvailability(response);
+    };
+
+    fetchAvailability();
+  }, [branch]);
+
+  console.log("checkAvailability", JSON.stringify(availability, null, 2));
 
   return (
     <>
@@ -55,7 +80,11 @@ export const Cart: React.FC = () => {
                   variant="outline"
                   size="xs"
                   radius="xl"
-                  onClick={() => clearCart()}
+                  onClick={() => {
+                    clearCart();
+                    setBranch(undefined);
+                    setAvailability(undefined);
+                  }}
                 >
                   Clear all
                 </Button>
@@ -66,7 +95,10 @@ export const Cart: React.FC = () => {
                 ))}
               </Stack>
               <CartTotals />
-              <ConfirmOrder openMap={() => setShowMap(true)} />
+              <Conditional condition={!branch}>
+                <BranchesSearch setBranch={setBranch} />
+              </Conditional>
+              <ConfirmOrder />
             </Stack>
           </Conditional>
           <Conditional condition={cartItems.length === 0}>
@@ -74,7 +106,12 @@ export const Cart: React.FC = () => {
           </Conditional>
         </Fieldset>
       </ScrollArea>
-      <MapModal opened={showMap} onClose={() => setShowMap(!showMap)} />
+
+      <AvailabilityModal
+        opened={Boolean(availability)}
+        onClose={() => setAvailability(undefined)}
+        availability={availability}
+      />
     </>
   );
 };
