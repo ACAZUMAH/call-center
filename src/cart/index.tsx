@@ -26,6 +26,7 @@ import { useHover } from "@mantine/hooks";
 import { useOderCheckoutForm } from "./hooks/useOrderCheckoutForm";
 import { IconCircleChevronRight } from "@tabler/icons-react";
 import { useCreateOrderMutation } from "./hooks/useCreateOrderMutation";
+import { v4 as uuidv4 } from "uuid";
 
 export const Cart: React.FC = () => {
   const { hovered, ref } = useHover<HTMLButtonElement>();
@@ -86,6 +87,7 @@ export const Cart: React.FC = () => {
       })),
       pickup: form.values.orderMethod === EnumDeliveryType.Pickup,
       deliveryType: form.values.orderMethod,
+      idempotencyKey: uuidv4(),
     });
 
     if (res && res.success) {

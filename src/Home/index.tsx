@@ -3,11 +3,24 @@ import React from "react";
 import { Products } from "../products";
 import { Cart } from "../cart";
 import classes from "./css/index.module.css";
+
 export const Home: React.FC = () => {
+  const getGreeting = () => {
+    const hour = new Date().getHours();
+
+    if (hour < 12) {
+      return "Good Morning";
+    } else if (hour < 18) {
+      return "Good Afternoon";
+    } else {
+      return "Good Evening";
+    }
+  };
+
   return (
     <Container fluid py="lg" mb="lg">
       <Title order={2} fw={500}>
-        Hello, Azumah
+        {getGreeting()}
       </Title>
       <Text c="dimmed" size="lg">
         Create a new sale
