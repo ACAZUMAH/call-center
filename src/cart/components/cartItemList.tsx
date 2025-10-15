@@ -3,16 +3,21 @@ import { CartItem } from "../../interfaces/redux";
 import {
   ActionIcon,
   Badge,
+  Card,
   Flex,
   Group,
-  Paper,
   Stack,
   Text,
 } from "@mantine/core";
-import { IconMinus, IconPlus } from "@tabler/icons-react";
+import {
+  IconCircleX,
+  IconMinus,
+  IconPlus,
+} from "@tabler/icons-react";
 import {
   useDecreaseCartItemQuantity,
   useIncreaseCartItemQuantity,
+  useRemoveItemFromCart,
 } from "../../hooks/useAppCart";
 import { CurrencyFormatter } from "../../components/currency/currency";
 
@@ -20,16 +25,30 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
   const { item, quantity } = cartItem;
   const increaseQuantity = useIncreaseCartItemQuantity();
   const decreaseQuantity = useDecreaseCartItemQuantity();
+  const removeItem = useRemoveItemFromCart();
 
   return (
-    <Paper withBorder radius="md" p="md" shadow="0">
+    <Card withBorder radius="md" p="md" shadow="sm">
       <Flex direction="row">
         <Stack justify="space-between" flex={8}>
-          <Text size="lg">{item.name}</Text>
+          <Group justify="space-between">
+            <Text size="lg">{item.name}</Text>
+            <ActionIcon
+              p={0}
+              h={24}
+              w={24}
+              color="red"
+              variant="subtle"
+              radius="sm"
+              onClick={() => removeItem(item._id!)}
+            >
+              <IconCircleX size={16} />
+            </ActionIcon>
+          </Group>
           <Group justify="space-between">
             <Group justify="baseLine">
               <Badge size="xl">
-               <CurrencyFormatter value={item.unitPrice!} />
+                <CurrencyFormatter value={item.unitPrice!} />
               </Badge>
             </Group>
             <Group gap="sm">
@@ -52,6 +71,6 @@ export const CartItemList: React.FC<CartItem> = (cartItem) => {
           </Group>
         </Stack>
       </Flex>
-    </Paper>
+    </Card>
   );
 };

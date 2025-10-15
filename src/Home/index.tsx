@@ -12,6 +12,14 @@ export const Home: React.FC = () => {
       <Text c="dimmed" size="lg">
         Create a new sale
       </Text>
+      {/* <SimpleGrid w="100%" cols={{ base: 1, md: 2}}>
+        <div className={classes.products}>
+          <Products />
+        </div>
+        <div className={classes.cart}>
+          <Cart />
+        </div>
+      </SimpleGrid> */}
       <div className={classes.main}>
         <div className={classes.products}>
           <Products />

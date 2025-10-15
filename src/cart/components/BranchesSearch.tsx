@@ -1,7 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import { useGetBranchesQueryOptions } from "../hooks/useGetBranches";
-import { Alert, Box, Center, Divider, Loader, TextInput } from "@mantine/core";
+import {
+  Alert,
+  Center,
+  Divider,
+  Loader,
+  Paper,
+  TextInput,
+} from "@mantine/core";
 import { Conditional } from "../../components";
 import { BranchSearchItem } from "./BranchSearchItem";
 import { BranchType } from "../../interfaces/graphql/graphql";
@@ -33,9 +40,9 @@ export const BranchesSearch: React.FC<BranchSearchItemProps> = ({
   const showNoBranches = !data?.length && !isLoading && !isError;
 
   return (
-    <Box>
+    <Paper withBorder p="md">
       <TextInput
-        mb="sm"
+        mb="md"
         placeholder="Search Branches"
         value={search}
         onChange={(e) => setSearch(e.currentTarget.value)}
@@ -48,12 +55,12 @@ export const BranchesSearch: React.FC<BranchSearchItemProps> = ({
       <Conditional condition={showBranches}>
         {data?.map((branch: BranchType, i: number) => (
           <div key={i}>
+            <Divider mb="md" />
             <BranchSearchItem
               key={i}
               branch={branch}
               onSelectBranch={setBranch}
             />
-            <Divider mb="md" />
           </div>
         ))}
       </Conditional>
@@ -63,6 +70,6 @@ export const BranchesSearch: React.FC<BranchSearchItemProps> = ({
           No branches found for search query {search}.
         </Alert>
       </Conditional>
-    </Box>
+    </Paper>
   );
 };

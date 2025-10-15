@@ -9,7 +9,8 @@
 }
 
 .cart {
-    flex: 2;
+    flex: 2.3;
+    margin-top: 16px;
     /* color: #ee3636 */
 }
 

@@ -1,37 +1,40 @@
 import {
   Button,
-  Fieldset,
+  Card,
   Group,
+  Paper,
   ScrollArea,
   Stack,
   Text,
-  Title,
 } from "@mantine/core";
 import React, { useEffect, useState } from "react";
 import { Conditional } from "../components";
 import { EmptyCart } from "./components/emptyCart";
-import {
-  useCartItems,
-  useCartItemsCount,
-  useClearCart,
-} from "../hooks/useAppCart";
+import { useCartItems, useClearCart } from "../hooks/useAppCart";
 import { CartItemList } from "./components/cartItemList";
 import { CartTotals } from "./components/cartTotals";
 import { ConfirmOrder } from "./components/confirmOrder";
 import { BranchesSearch } from "./components/BranchesSearch";
-import { BranchType } from "../interfaces/graphql/graphql";
+import {
+  BranchType,
+  CallCenterPaymentOptionType,
+  EnumDeliveryType,
+} from "../interfaces/graphql/graphql";
 import { useCheckAvailabilityMutation } from "./hooks/useCheckAvailability";
 import { showNotification } from "@mantine/notifications";
-//import { AvailabilityModal } from "./components/AvailabilityModal";
+import { useHover } from "@mantine/hooks";
+import { useOderCheckoutForm } from "./hooks/useOrderCheckoutForm";
+import { IconCircleChevronRight } from "@tabler/icons-react";
+import { useCreateOrderMutation } from "./hooks/useCreateOrderMutation";
 
 export const Cart: React.FC = () => {
+  const { hovered, ref } = useHover<HTMLButtonElement>();
   const [branch, setBranch] = useState<BranchType>();
-  // const [availability, setAvailability] = useState<any>();
-  const itemCount = useCartItemsCount();
   const cartItems = useCartItems();
   const clearCart = useClearCart();
-
+  const form = useOderCheckoutForm();
   const { handleCheckAvailability } = useCheckAvailabilityMutation();
+  const { handleCreateOrder, isPending } = useCreateOrderMutation();
 
   useEffect(() => {
     const productIds = cartItems.map((item) => item.item._id!);
@@ -63,6 +66,35 @@ export const Cart: React.FC = () => {
     fetchAvailability();
   }, [branch]);
 
+  const handleCheckoutOrder = async () => {
+    const res = await handleCreateOrder({
+      branchId: branch?._id!,
+      customerName: form.values.customerName,
+      address: form.values.address,
+      phoneNumber: form.values.customerPhone,
+      momoNumber:
+        form.values.paymentMethod === CallCenterPaymentOptionType.MobilePayment
+          ? form.values.customerPhone
+          : undefined,
+      paymentOption:
+        form.values.orderMethod === EnumDeliveryType.Pickup
+          ? CallCenterPaymentOptionType.Cash
+          : form.values.paymentMethod,
+      packages: cartItems.map((item) => ({
+        productId: item.item._id!,
+        quantity: item.quantity,
+      })),
+      pickup: form.values.orderMethod === EnumDeliveryType.Pickup,
+      deliveryType: form.values.orderMethod,
+    });
+
+    if (res && res.success) {
+      clearCart();
+      setBranch(undefined);
+      form.resetForm();
+    }
+  };
+
   return (
     <>
       <ScrollArea
@@ -71,64 +103,63 @@ export const Cart: React.FC = () => {
         offsetScrollbars
         scrollbarSize={5}
       >
-        <Fieldset
-          legend={
-            <Title ta="center" order={2} fw={500}>
-              Cart
-            </Title>
-          }
-          radius="lg"
-          p={10}
-        >
-          <Conditional condition={cartItems.length >= 1}>
-            <Text size="lg" c="dimmed" my="md">
-              Review your shopping cart, and checkout your order
-            </Text>
-
-            <Stack gap="md">
-              <Group justify="space-between">
-                <Text size="lg">Cart Items: {itemCount}</Text>
+        <Paper radius="lg" p={10} withBorder>
+          <Stack gap="md">
+            <ConfirmOrder branch={branch} form={form} setBranch={setBranch} />
+            <Conditional condition={cartItems.length >= 1}>
+              <Conditional condition={!branch}>
+                <BranchesSearch setBranch={setBranch} />
+              </Conditional>
+            </Conditional>
+            <Card withBorder>
+              <Group justify="space-between" mb="sm">
+                <Text size="sm">Cart Items</Text>
                 <Button
+                  ref={ref as React.Ref<HTMLButtonElement>}
                   color="rgba(255, 10, 10, 0.85)"
-                  variant="outline"
-                  size="xs"
+                  variant={hovered ? "light" : "subtle"}
                   radius="xl"
                   onClick={() => {
                     clearCart();
                     setBranch(undefined);
                   }}
                 >
-                  Clear all
+                  Clear
                 </Button>
               </Group>
 
-              <Stack>
-                {cartItems.map((cartItem, index) => (
-                  <CartItemList {...cartItem} key={index} />
-                ))}
-              </Stack>
-
-              <CartTotals />
-
-              <Conditional condition={!branch}>
-                <BranchesSearch setBranch={setBranch} />
+              <Conditional condition={cartItems.length >= 1}>
+                <Stack>
+                  {cartItems.map((cartItem, index) => (
+                    <CartItemList {...cartItem} key={index} />
+                  ))}
+                </Stack>
               </Conditional>
-
-              <ConfirmOrder branch={branch} />
-            </Stack>
-          </Conditional>
-
-          <Conditional condition={cartItems.length === 0}>
-            <EmptyCart />
-          </Conditional>
-        </Fieldset>
+              <Conditional condition={cartItems.length < 1}>
+                <EmptyCart />
+              </Conditional>
+            </Card>
+            <Conditional condition={cartItems.length >= 1}>
+              <Paper withBorder p="md">
+                <CartTotals />
+                <Group justify="flex-end">
+                  <Button
+                    color="brand"
+                    mt="sm"
+                    radius="xl"
+                    disabled={!form.isValid}
+                    rightSection={<IconCircleChevronRight size="1rem" />}
+                    onClick={handleCheckoutOrder}
+                    loading={isPending}
+                  >
+                    Checkout
+                  </Button>
+                </Group>
+              </Paper>
+            </Conditional>
+          </Stack>
+        </Paper>
       </ScrollArea>
-
-      {/* <AvailabilityModal
-        opened={Boolean(availability?.unAvailable.length)}
-        onClose={() => setAvailability(undefined)}
-        availability={availability}
-      /> */}
     </>
   );
 };
